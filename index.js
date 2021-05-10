@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const fs = require('fs');
 
 const Engineer = require('./lib/Engineer');
 const Manager = require('./lib/Manager');
@@ -78,8 +79,94 @@ function addIntern() {
         });
 }
 
+function convertTeamtoHTML() {
+    let html=``;
+    for (i = 0; i < teamArray.length; i++) {
+
+        if (teamArray[i].getRole() === "Manager") {
+            html += `
+    <div class="col mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">${teamArray[i].getName()}</h5>
+                <p class="card-text">${teamArray[i].getRole()}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">ID: ${teamArray[i].getId()}</li>
+                <li class="list-group-item">Email: <a target="_blank" href="mailto:${teamArray[i].getEmail()}" class="card-link">${teamArray[i].getEmail()}</a></li>
+                <li class="list-group-item">Office Number: ${teamArray[i].getOffice()}</li>
+            </ul>
+        </div>
+    </div>`
+        } else if (teamArray[i].getRole() === "Engineer") {
+            html += `
+    <div class="col mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">${teamArray[i].getName()}</h5>
+                <p class="card-text">${teamArray[i].getRole()}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">ID: ${teamArray[i].getId()}</li>
+                <li class="list-group-item">Email: <a target="_blank" href="mailto:${teamArray[i].getEmail()}" class="card-link">${teamArray[i].getEmail()}</a></li>
+                <li class="list-group-item">Github: <a target="_blank" href="https://www.github.com/${teamArray[i].getGithub()}" class="card-link">${teamArray[i].getGithub()}</a></li>
+            </ul>
+        </div>
+    </div>`
+        } else {
+            html += `
+    <div class="col mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">${teamArray[i].getName()}</h5>
+                <p class="card-text">${teamArray[i].getRole()}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: ${teamArray[i].getId()}</li>
+            <li class="list-group-item">Email: <a target="_blank" href="mailto:${teamArray[i].getEmail()}" class="card-link">${teamArray[i].getEmail()}</a></li>
+            <li class="list-group-item">School: ${teamArray[i].getSchool()}</li>
+            </ul>
+        </div>
+    </div>`
+        }
+    }
+    return html.trim();
+}
+
+function generateHTML() {
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-4 text-center">My Team</h1>
+        </div>
+    </div>
+    <div class="container text-center">
+        <div class="row row-cols-1 row-cols-md-3">
+            ${convertTeamtoHTML()}
+        </div>
+    </div>
+    
+</body>
+</html>
+    `;
+}
+
 function finish() {
     console.log(teamArray);
+    
+    fs.writeFile('test.html', generateHTML(), () => {
+        console.log('written');
+    });
 }
 
 function branch() {
