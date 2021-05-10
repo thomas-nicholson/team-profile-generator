@@ -161,12 +161,8 @@ function generateHTML() {
     `;
 }
 
-function finish() {
-    console.log(teamArray);
-    
-    fs.writeFile('test.html', generateHTML(), () => {
-        console.log('written');
-    });
+function finish() {    
+    fs.writeFile('dist/team.html', generateHTML(), () => {});
 }
 
 function branch() {

@@ -10,7 +10,7 @@ test('Can set Github account via constructor', () => {
 
 });
 
-test('getRole() should return "Engineer', () => {
+test('getRole() should return "Engineer"', () => {
     let expectedResult = "Engineer";
     const newEngineer = new Engineer();
 

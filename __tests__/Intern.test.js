@@ -11,7 +11,7 @@ test('Can set school via constructor', () => {
     expect(newIntern.school).toEqual(school);
 });
 // getRole() should return "intern"
-test('getRole() should return "Intern', () => {
+test('getRole() should return "Intern"', () => {
     let expectedResult = "Intern";
     const newIntern = new Intern();
     expect(newIntern.getRole()).toEqual(expectedResult);
